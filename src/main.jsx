@@ -4,11 +4,12 @@ import {Provider} from 'react-redux';
 import {ConnectedRouter} from 'connected-react-router';
 import {store} from 'store/store';
 import {history} from 'store/history';
+import {MainPage} from 'components/main-page';
 
 ReactDOM.render(
     <Provider store={store}>
         <ConnectedRouter history={history}>
-            <div>React - Nonograms</div>
+            <MainPage />
         </ConnectedRouter>
     </Provider>,
     document.getElementById('root')
