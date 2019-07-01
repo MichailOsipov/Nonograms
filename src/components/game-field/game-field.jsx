@@ -67,16 +67,19 @@ const Values = ({columnDigits, rowDigits, columnDigitsHeight, rowDigitsWidth, va
             <React.Fragment
                 key={colIndex} // eslint-disable-line
             >
-                {rowDigits.map((rowEl, rowIndex) => (
-                    <Cell
-                        key={rowIndex} // eslint-disable-line
-                        rowIndex={columnDigitsHeight + rowIndex + 1}
-                        colIndex={rowDigitsWidth + colIndex + 1}
-                        sideWidth={CELL_SIDE_WIDTH}
-                        strokeWidth={CELL_STROKE_WIDTH}
-                        type={values[rowIndex][colIndex]}
-                    />
-                ))}
+                {rowDigits.map((rowEl, rowIndex) => {
+                    const type = values && values[rowIndex] && values[rowIndex][colIndex];
+                    return (
+                        <Cell
+                            key={rowIndex} // eslint-disable-line
+                            rowIndex={columnDigitsHeight + rowIndex + 1}
+                            colIndex={rowDigitsWidth + colIndex + 1}
+                            sideWidth={CELL_SIDE_WIDTH}
+                            strokeWidth={CELL_STROKE_WIDTH}
+                            type={type}
+                        />
+                    );
+                })}
             </React.Fragment>
         ))}
     </React.Fragment>
@@ -87,7 +90,7 @@ Values.propTypes = {
     rowDigits: PropTypes.arrayOf(PropTypes.arrayOf(PropTypes.number)),
     columnDigitsHeight: PropTypes.number,
     rowDigitsWidth: PropTypes.number,
-    values: PropTypes.arrayOf(PropTypes.arrayOf(PropTypes.number))
+    values: PropTypes.arrayOf(PropTypes.arrayOf(PropTypes.oneOf(['unknown', 'filled', 'empty'])))
 };
 
 export const GameField = ({columnDigits, rowDigits, values}) => {
@@ -120,5 +123,5 @@ export const GameField = ({columnDigits, rowDigits, values}) => {
 GameField.propTypes = {
     columnDigits: PropTypes.arrayOf(PropTypes.arrayOf(PropTypes.number)),
     rowDigits: PropTypes.arrayOf(PropTypes.arrayOf(PropTypes.number)),
-    values: PropTypes.arrayOf(PropTypes.arrayOf(PropTypes.number))
+    values: PropTypes.arrayOf(PropTypes.arrayOf(PropTypes.oneOf(['unknown', 'filled', 'empty'])))
 };

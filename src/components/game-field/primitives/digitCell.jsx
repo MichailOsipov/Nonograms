@@ -16,7 +16,7 @@ export const DigitCell = ({
             height={sideWidth}
             stroke="black"
             strokeWidth={strokeWidth}
-            fill="white"
+            fill="#d0d0d0"
         />
         <text x={(colIndex * sideWidth) + 5} y={(rowIndex * sideWidth) + 15}>
             {value}
