@@ -3,8 +3,8 @@ import {connect} from 'react-redux';
 import {
     setAttributes,
     solveNonogram,
-    getGameAttributes,
-    getGameValues
+    getAttributes,
+    getValues
 } from 'domains/game-logic';
 import {GameField} from 'components/game-field';
 
@@ -34,24 +34,10 @@ const ROW_DIGITS = [
     [2]
 ];
 
-// rows first
-const VALUES = [
-    ['unknown', 'unknown', 'unknown', 'unknown', 'unknown', 'unknown', 'unknown', 'unknown', 'unknown', 'unknown'],
-    ['unknown', 'unknown', 'unknown', 'unknown', 'unknown', 'unknown', 'unknown', 'unknown', 'unknown', 'unknown'],
-    ['unknown', 'unknown', 'unknown', 'unknown', 'unknown', 'unknown', 'unknown', 'unknown', 'unknown', 'unknown'],
-    ['unknown', 'unknown', 'unknown', 'unknown', 'unknown', 'unknown', 'unknown', 'unknown', 'unknown', 'unknown'],
-    ['unknown', 'unknown', 'unknown', 'unknown', 'unknown', 'unknown', 'unknown', 'unknown', 'unknown', 'unknown'],
-    ['unknown', 'unknown', 'unknown', 'unknown', 'unknown', 'unknown', 'unknown', 'unknown', 'unknown', 'unknown'],
-    ['unknown', 'unknown', 'unknown', 'unknown', 'unknown', 'unknown', 'unknown', 'unknown', 'unknown', 'unknown'],
-    ['unknown', 'unknown', 'unknown', 'unknown', 'unknown', 'unknown', 'unknown', 'unknown', 'unknown', 'unknown'],
-    ['unknown', 'unknown', 'unknown', 'unknown', 'unknown', 'unknown', 'unknown', 'unknown', 'unknown', 'unknown'],
-    ['unknown', 'unknown', 'unknown', 'unknown', 'unknown', 'unknown', 'unknown', 'unknown', 'unknown', 'unknown']
-];
-
 export const MainPage = connect(
     state => ({
-        gameAttributes: getGameAttributes(state),
-        gameValues: getGameValues(state)
+        gameAttributes: getAttributes(state),
+        gameValues: getValues(state)
     }),
     dispatch => ({
         setGameAttributes: ({rowDigits, columnDigits}) => dispatch(setAttributes({rowDigits, columnDigits})),

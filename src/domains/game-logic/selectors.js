@@ -4,12 +4,12 @@ import {GAME_LOGIC_STORE_KEY} from './store-key';
 
 const getGameLogicDomain = getDomain(GAME_LOGIC_STORE_KEY);
 
-export const getGameAttributes = createSelector(
+export const getAttributes = createSelector(
     getGameLogicDomain,
     ({columnDigits, rowDigits}) => ({columnDigits, rowDigits})
 );
 
-export const getGameValues = createSelector(
+export const getValues = createSelector(
     getGameLogicDomain,
     ({values}) => values
 );
