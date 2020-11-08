@@ -1,10 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import {CELL_STROKE_WIDTH} from '../constants';
 
 const TYPE_TO_COLOR = {
     unknown: 'white',
-    filled: 'black',
-    empty: 'grey'
+    filled: '#262626',
+    empty: '#d4d4d4'
 };
 
 export const Cell = ({
@@ -15,13 +16,13 @@ export const Cell = ({
     type
 }) => (
     <rect
-        x={colIndex * sideWidth}
-        y={rowIndex * sideWidth}
+        x={(colIndex * sideWidth) + (CELL_STROKE_WIDTH / 2)}
+        y={(rowIndex * sideWidth) + (CELL_STROKE_WIDTH / 2)}
         width={sideWidth}
         height={sideWidth}
         stroke="black"
         strokeWidth={strokeWidth}
-        fill={TYPE_TO_COLOR[type] || 'white'}
+        fill={TYPE_TO_COLOR[type]}
     />
 );
 

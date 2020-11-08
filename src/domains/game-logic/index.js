@@ -1,5 +1,5 @@
-export {setAttributes, setValues} from './actions';
+export {setAttributes, setValues, setGameMode} from './actions';
 export {gameLogicReducer} from './reducer';
-export {solveNonogram} from './epic-actions';
-export {getAttributes, getValues} from './selectors';
+export {solveNonogram, applyNewAttributes} from './epic-actions';
+export {getAttributes, getValues, getGameMode} from './selectors';
 export {GAME_LOGIC_STORE_KEY} from './store-key';

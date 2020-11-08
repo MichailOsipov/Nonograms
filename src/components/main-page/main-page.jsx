@@ -3,65 +3,55 @@ import {connect} from 'react-redux';
 import {
     setAttributes,
     solveNonogram,
+    setGameMode,
     getAttributes,
-    getValues
+    getValues,
+    getGameMode
 } from 'domains/game-logic';
 import {GameField} from 'components/game-field';
-
-const COLUMN_DIGITS = [
-    [1],
-    [3],
-    [5],
-    [3, 1],
-    [6, 2],
-    [2, 2, 2],
-    [1, 1, 1],
-    [1, 2, 2],
-    [3, 3],
-    [1]
-];
-
-const ROW_DIGITS = [
-    [3],
-    [2, 1],
-    [1, 1, 2],
-    [1, 1],
-    [4, 1],
-    [5, 2],
-    [5, 1],
-    [2, 2],
-    [6],
-    [2]
-];
+import {EditNonogram} from 'components/edit-nonogram';
 
 export const MainPage = connect(
     state => ({
         gameAttributes: getAttributes(state),
-        gameValues: getValues(state)
+        gameValues: getValues(state),
+        gameMode: getGameMode(state)
     }),
     dispatch => ({
-        setGameAttributes: ({rowDigits, columnDigits}) => dispatch(setAttributes({rowDigits, columnDigits})),
-        solveGameNonogram: () => dispatch(solveNonogram())
+        onSolveNonogram: () => dispatch(solveNonogram()),
+        onSetGameMode: ({gameMode}) => dispatch(setGameMode({gameMode}))
     })
 )(({
     gameAttributes,
     gameValues,
-    setGameAttributes,
-    solveGameNonogram
+    gameMode,
+    onSolveNonogram,
+    onSetGameMode
 }) => (
     <div>
-        <GameField
-            columnDigits={gameAttributes.columnDigits}
-            rowDigits={gameAttributes.rowDigits}
-            values={gameValues}
-        />
-        <button
-            onClick={() => {
-                setGameAttributes({rowDigits: ROW_DIGITS, columnDigits: COLUMN_DIGITS});
-                solveGameNonogram();
-            }}
-        >
-            Start Solving
-        </button>
+        <div>
+            <button
+                onClick={onSolveNonogram}
+            >
+                Solve nonogam
+            </button>
+        </div>
+        <div>
+            <button
+                onClick={() => onSetGameMode(gameMode === 'play' ? {gameMode: 'edit'} : {gameMode: 'play'})}
+            >
+                {gameMode === 'play' ? 'Edit nonogram' : 'Show nonogram'}
+            </button>
+        </div>
+        {gameMode === 'play' && (
+            <GameField
+                columnDigits={gameAttributes.columnDigits}
+                rowDigits={gameAttributes.rowDigits}
+                values={gameValues}
+            />
+        )}
+        {gameMode === 'edit' && (
+            <EditNonogram />
+        )}
     </div>
 ));

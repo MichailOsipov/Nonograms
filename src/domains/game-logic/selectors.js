@@ -13,3 +13,8 @@ export const getValues = createSelector(
     getGameLogicDomain,
     ({values}) => values
 );
+
+export const getGameMode = createSelector(
+    getGameLogicDomain,
+    ({gameMode}) => gameMode,
+);

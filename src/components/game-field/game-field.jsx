@@ -3,9 +3,8 @@ import PropTypes from 'prop-types';
 import {findMaxArrayLength} from 'utils/find-max-array-length';
 import {DigitCell} from './primitives/digitCell';
 import {Cell} from './primitives/cell';
+import {CELL_SIDE_WIDTH, CELL_STROKE_WIDTH} from './constants';
 
-const CELL_SIDE_WIDTH = 20;
-const CELL_STROKE_WIDTH = 2;
 
 const ColumnDigits = ({columnDigits, columnDigitsHeight, rowDigitsWidth}) => (
     <React.Fragment>
@@ -16,8 +15,8 @@ const ColumnDigits = ({columnDigits, columnDigitsHeight, rowDigitsWidth}) => (
                 {colEl.map((colElEl, colElElIndex) => (
                     <DigitCell
                         key={colElElIndex} // eslint-disable-line
-                        rowIndex={(columnDigitsHeight - colEl.length) + 1 + colElElIndex}
-                        colIndex={rowDigitsWidth + colElIndex + 1}
+                        rowIndex={(columnDigitsHeight - colEl.length) + colElElIndex}
+                        colIndex={rowDigitsWidth + colElIndex}
                         sideWidth={CELL_SIDE_WIDTH}
                         strokeWidth={CELL_STROKE_WIDTH}
                         value={colElEl}
@@ -43,8 +42,8 @@ const RowDigits = ({rowDigits, columnDigitsHeight, rowDigitsWidth}) => (
                 {rowEl.map((rowElEl, rowElElIndex) => (
                     <DigitCell
                         key={rowElElIndex} // eslint-disable-line
-                        rowIndex={columnDigitsHeight + rowElIndex + 1}
-                        colIndex={(rowDigitsWidth - rowEl.length) + 1 + rowElElIndex}
+                        rowIndex={columnDigitsHeight + rowElIndex}
+                        colIndex={(rowDigitsWidth - rowEl.length) + rowElElIndex}
                         sideWidth={CELL_SIDE_WIDTH}
                         strokeWidth={CELL_STROKE_WIDTH}
                         value={rowElEl}
@@ -63,23 +62,25 @@ RowDigits.propTypes = {
 
 const Values = ({columnDigits, rowDigits, columnDigitsHeight, rowDigitsWidth, values}) => (
     <React.Fragment>
-        {columnDigits.map((colEl, colIndex) => (
+        {columnDigits.map((_1, colIndex) => (
             <React.Fragment
                 key={colIndex} // eslint-disable-line
             >
-                {rowDigits.map((rowEl, rowIndex) => {
-                    const type = values && values[rowIndex] && values[rowIndex][colIndex];
-                    return (
-                        <Cell
-                            key={rowIndex} // eslint-disable-line
-                            rowIndex={columnDigitsHeight + rowIndex + 1}
-                            colIndex={rowDigitsWidth + colIndex + 1}
-                            sideWidth={CELL_SIDE_WIDTH}
-                            strokeWidth={CELL_STROKE_WIDTH}
-                            type={type}
-                        />
-                    );
-                })}
+                <g>
+                    {rowDigits.map((_2, rowIndex) => {
+                        const type = values && values[rowIndex] && values[rowIndex][colIndex];
+                        return (
+                            <Cell
+                                key={rowIndex} // eslint-disable-line
+                                rowIndex={columnDigitsHeight + rowIndex}
+                                colIndex={rowDigitsWidth + colIndex}
+                                sideWidth={CELL_SIDE_WIDTH}
+                                strokeWidth={CELL_STROKE_WIDTH}
+                                type={type}
+                            />
+                        );
+                    })}
+                </g>
             </React.Fragment>
         ))}
     </React.Fragment>
@@ -98,7 +99,10 @@ export const GameField = ({columnDigits, rowDigits, values}) => {
     const rowDigitsWidth = findMaxArrayLength(rowDigits);
 
     return (
-        <svg height={500} width={500}>
+        <svg
+            height={(CELL_SIDE_WIDTH * (columnDigitsHeight + rowDigits.length)) + CELL_STROKE_WIDTH}
+            width={(CELL_SIDE_WIDTH * (rowDigitsWidth + columnDigits.length)) + CELL_STROKE_WIDTH}
+        >
             <ColumnDigits
                 columnDigits={columnDigits}
                 columnDigitsHeight={columnDigitsHeight}

@@ -10,8 +10,8 @@ export const DigitCell = ({
 }) => (
     <React.Fragment>
         <rect
-            x={colIndex * sideWidth}
-            y={rowIndex * sideWidth}
+            x={colIndex * sideWidth + 1}
+            y={rowIndex * sideWidth + 1}
             width={sideWidth}
             height={sideWidth}
             stroke="black"
